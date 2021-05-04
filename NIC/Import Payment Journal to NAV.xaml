@@ -1,0 +1,1686 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Navigate_to_import_journal" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:p="http://schemas.microsoft.com/workflow/2012/07/xaml/activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="Out_ErrorStatus" Type="OutArgument(x:Boolean)" />
+    <x:Property Name="Out_ErrorMsg" Type="OutArgument(x:String)" />
+    <x:Property Name="In_Account_no" Type="InArgument(x:String)" />
+    <x:Property Name="In_PaymentJournal_FilePath" Type="InArgument(x:String)" />
+    <x:Property Name="Out_ZeroDifference" Type="OutArgument(x:Boolean)" />
+    <x:Property Name="Out_ErrorPopup_PaymentJournal" Type="OutArgument(x:Boolean)" />
+    <x:Property Name="Bi_JournalPosted" Type="OutArgument(x:Boolean)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>849,1555</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.Data.Entity</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Import Payment Journal to NAV" sap:VirtualizedContainerService.HintSize="859,1390" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="817,51" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Payment Journal Import Started&quot;]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:LogMessage>
+    <TryCatch DisplayName="Import Payment Journal to NAV" sap:VirtualizedContainerService.HintSize="817,1116" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <TryCatch.Try>
+        <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window NAV - Payment Journal page" sap:VirtualizedContainerService.HintSize="779,889" sap2010:WorkflowViewState.IdRef="WindowScope_12" InformativeScreenshot="0dfca1fe901c9a14af0f64366754696b" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='* - Payment Journal*' /&gt;">
+          <ui:WindowScope.Body>
+            <ActivityAction x:TypeArguments="x:Object">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+              </ActivityAction.Argument>
+              <Flowchart DisplayName="Import Payment Journal to NAV" sap:VirtualizedContainerService.HintSize="745,743" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+                <Flowchart.Variables>
+                  <Variable x:TypeArguments="x:Boolean" Name="Add_Filter" />
+                  <Variable x:TypeArguments="ui:GenericValue" Name="OpenLine" />
+                  <Variable x:TypeArguments="x:String" Name="Popuptext" />
+                  <Variable x:TypeArguments="x:Boolean" Name="ApplyPackagesPopup" />
+                  <Variable x:TypeArguments="x:Boolean" Name="TablesProcessedPopup" />
+                  <Variable x:TypeArguments="x:Boolean" Name="PackageContainsRecordsPopup" />
+                  <Variable x:TypeArguments="x:Boolean" Name="ImportExcelTemplatePopup" />
+                  <Variable x:TypeArguments="x:Int32" Default="1" Name="RetryCount" />
+                </Flowchart.Variables>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    <av:Point x:Key="ShapeLocation">240,32.5</av:Point>
+                    <av:Size x:Key="ShapeSize">60,75</av:Size>
+                    <av:PointCollection x:Key="ConnectorLocation">270,107.5 270,134.5</av:PointCollection>
+                    <x:Double x:Key="Height">707.07999999999993</x:Double>
+                    <x:Double x:Key="Width">711</x:Double>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Flowchart.StartNode>
+                  <x:Reference>__ReferenceID6</x:Reference>
+                </Flowchart.StartNode>
+                <FlowDecision x:Name="__ReferenceID0" Condition="[OpenLine = &quot;0.00&quot; or OpenLine = &quot;0,00&quot;]" DisplayName="Open Line" sap:VirtualizedContainerService.HintSize="70,87" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <av:Point x:Key="ShapeLocation">235,276.5</av:Point>
+                      <av:Size x:Key="ShapeSize">70,87</av:Size>
+                      <av:PointCollection x:Key="TrueConnector">235,320 150,320 150,374.5</av:PointCollection>
+                      <av:PointCollection x:Key="FalseConnector">305,320 440,320 440,357</av:PointCollection>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <FlowDecision.True>
+                    <FlowStep x:Name="__ReferenceID2">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <av:Point x:Key="ShapeLocation">50,374.5</av:Point>
+                          <av:Size x:Key="ShapeSize">200,66</av:Size>
+                          <av:PointCollection x:Key="ConnectorLocation">150,440.5 150,454.5</av:PointCollection>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Sequence DisplayName="Click on Actions tab, Import Journal" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_29">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Boolean">[Bi_JournalPosted]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on Actions tab" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_14" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                          <ui:Click.CursorPosition>
+                            <ui:CursorPosition Position="Center">
+                              <ui:CursorPosition.OffsetX>
+                                <InArgument x:TypeArguments="x:Int32" />
+                              </ui:CursorPosition.OffsetX>
+                              <ui:CursorPosition.OffsetY>
+                                <InArgument x:TypeArguments="x:Int32" />
+                              </ui:CursorPosition.OffsetY>
+                            </ui:CursorPosition>
+                          </ui:Click.CursorPosition>
+                          <ui:Click.Target>
+                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="6180f94bbdffe126b6016ee5b30ee444" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd ctrlname='MenuContentPane' /&gt;&lt;wnd cls='WindowsForms10.Window.*' /&gt;&lt;wnd cls='HwndWrapper*' /&gt;&lt;ctrl name='ACTIONS' role='list' /&gt;&lt;ctrl name='ACTIONS' role='text' /&gt;" WaitForReady="INTERACTIVE" />
+                          </ui:Click.Target>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:Click>
+                        <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type Batch no." EmptyField="True" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_13" SendWindowMessages="False" SimulateType="False" Text="[In_Account_no]">
+                          <ui:TypeInto.Target>
+                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="01ad033994576d6f2f4d491cb0be4a3f" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='content' /&gt;&lt;wnd ctrlname='contentAndMessagesPlaceholder' /&gt;&lt;wnd ctrlname='ContentPlaceholder' /&gt;&lt;wnd aaname='Batch Name' cls='WindowsForms10.Window.*' /&gt;&lt;wnd aaname='Batch Name' cls='WindowsForms10.EDIT.*' /&gt;" WaitForReady="INTERACTIVE" />
+                          </ui:TypeInto.Target>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:TypeInto>
+                        <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Send Hotkey" EmptyField="False" sap:VirtualizedContainerService.HintSize="334,51" sap2010:WorkflowViewState.IdRef="SendHotkey_6" Key="enter" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
+                          <ui:SendHotkey.Target>
+                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" WaitForReady="INTERACTIVE" />
+                          </ui:SendHotkey.Target>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:SendHotkey>
+                        <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on Import Journal" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_15" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                          <ui:Click.CursorPosition>
+                            <ui:CursorPosition Position="Center">
+                              <ui:CursorPosition.OffsetX>
+                                <InArgument x:TypeArguments="x:Int32" />
+                              </ui:CursorPosition.OffsetX>
+                              <ui:CursorPosition.OffsetY>
+                                <InArgument x:TypeArguments="x:Int32" />
+                              </ui:CursorPosition.OffsetY>
+                            </ui:CursorPosition>
+                          </ui:Click.CursorPosition>
+                          <ui:Click.Target>
+                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="b2abc53bfa3c31844ae864e0e70bef74" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd ctrlname='MenuContentPane' /&gt;&lt;wnd cls='WindowsForms10.Window.*' /&gt;&lt;wnd cls='HwndWrapper*' /&gt;&lt;ctrl name='Import Journal' role='push button' /&gt;" WaitForReady="INTERACTIVE" />
+                          </ui:Click.Target>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:Click>
+                      </Sequence>
+                      <FlowStep.Next>
+                        <FlowStep x:Name="__ReferenceID5">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <av:Point x:Key="ShapeLocation">50,454.5</av:Point>
+                              <av:Size x:Key="ShapeSize">200,66</av:Size>
+                              <av:PointCollection x:Key="ConnectorLocation">150,520.5 150,534.5</av:PointCollection>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <Sequence DisplayName="Popup windows" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_67">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <Sequence DisplayName="Popup : Do you want to import data from the Excel template?" sap:VirtualizedContainerService.HintSize="604,1280" sap2010:WorkflowViewState.IdRef="Sequence_60">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:UiElementExists DisplayName="Do you want to import data from the Excel template?" Exists="[ImportExcelTemplatePopup]" sap:VirtualizedContainerService.HintSize="562,51" sap2010:WorkflowViewState.IdRef="UiElementExists_22">
+                                <ui:UiElementExists.Target>
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="ccc118c3ff3f58666b12d542362579ab" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
+                                </ui:UiElementExists.Target>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </ui:UiElementExists>
+                              <If Condition="[ImportExcelTemplatePopup]" DisplayName="Condition based on popup " sap:VirtualizedContainerService.HintSize="562,1097" sap2010:WorkflowViewState.IdRef="If_33">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Then>
+                                  <Sequence sap2010:Annotation.AnnotationText="1. Click ok if text in popup contains Do you want to import data from the Excel template?&#xA;2. Select the file to import and click on open button" DisplayName="If popup exists then" sap:VirtualizedContainerService.HintSize="526,920" sap2010:WorkflowViewState.IdRef="Sequence_59">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <ui:GetAttribute ContinueOnError="{x:Null}" Attribute="aaname" DisplayName="Get popup text - Import excel template" sap:VirtualizedContainerService.HintSize="484,51" sap2010:WorkflowViewState.IdRef="GetAttribute_17">
+                                      <ui:GetAttribute.Result>
+                                        <OutArgument x:TypeArguments="x:String">[Popuptext]</OutArgument>
+                                      </ui:GetAttribute.Result>
+                                      <ui:GetAttribute.Target>
+                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="8373774c9602977981954974951edfdf" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='content' /&gt;&lt;wnd ctrlname='contentAndMessagesPlaceholder' /&gt;&lt;wnd ctrlname='ContentPlaceholder' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='1' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='1' /&gt;&lt;wnd cls='WindowsForms10.STATIC.*' title='*' /&gt;" WaitForReady="INTERACTIVE" />
+                                      </ui:GetAttribute.Target>
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                    </ui:GetAttribute>
+                                    <If Condition="[Popuptext.Contains(&quot;Do you want to import data from the Excel template?&quot;)]" DisplayName="Condition based on popup text" sap:VirtualizedContainerService.HintSize="484,695" sap2010:WorkflowViewState.IdRef="If_32">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <If.Then>
+                                        <Sequence DisplayName="Poopup contains Do you want to import data from the Excel template?" sap:VirtualizedContainerService.HintSize="376,518" sap2010:WorkflowViewState.IdRef="Sequence_58">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on Yes" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_52" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                            <ui:Click.CursorPosition>
+                                              <ui:CursorPosition Position="Center">
+                                                <ui:CursorPosition.OffsetX>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetX>
+                                                <ui:CursorPosition.OffsetY>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetY>
+                                              </ui:CursorPosition>
+                                            </ui:Click.CursorPosition>
+                                            <ui:Click.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="be1db290e2f868b624cd78b325bda589" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='dialogActionBar' /&gt;&lt;wnd cls='WindowsForms10.BUTTON.*' title='Yes' /&gt;" WaitForReady="INTERACTIVE" />
+                                            </ui:Click.Target>
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                          </ui:Click>
+                                          <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type file name" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_14" SendWindowMessages="False" SimulateType="False" Text="[In_PaymentJournal_FilePath]">
+                                            <ui:TypeInto.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="05fb8e94a63602753426276603f53577" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='#32770' title='Import config' /&gt;&lt;wnd ctrlid='*' cls='ComboBox' aaname='File name:' /&gt;" WaitForReady="INTERACTIVE" />
+                                            </ui:TypeInto.Target>
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                          </ui:TypeInto>
+                                          <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click Open" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_53" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                            <ui:Click.CursorPosition>
+                                              <ui:CursorPosition Position="Center">
+                                                <ui:CursorPosition.OffsetX>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetX>
+                                                <ui:CursorPosition.OffsetY>
+                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                </ui:CursorPosition.OffsetY>
+                                              </ui:CursorPosition>
+                                            </ui:Click.CursorPosition>
+                                            <ui:Click.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="11ef5e97d0234c843bdd2d702e5d9a8e" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='#32770' title='Import config' /&gt;&lt;wnd ctrlid='1' title='&amp;amp;Open' /&gt;" WaitForReady="INTERACTIVE" />
+                                            </ui:Click.Target>
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                          </ui:Click>
+                                        </Sequence>
+                                      </If.Then>
+                                    </If>
+                                  </Sequence>
+                                </If.Then>
+                              </If>
+                            </Sequence>
+                            <Delay Duration="00:00:05" sap:VirtualizedContainerService.HintSize="604,22" sap2010:WorkflowViewState.IdRef="Delay_1" />
+                            <Sequence DisplayName="Popup : Table 81 in the package BOT_CASHBOOK_JNL" sap:VirtualizedContainerService.HintSize="604,66" sap2010:WorkflowViewState.IdRef="Sequence_62">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:UiElementExists DisplayName="Table 81 in the package BOT_CASHBOOK_JNL" Exists="[PackageContainsRecordsPopup]" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="UiElementExists_23">
+                                <ui:UiElementExists.Target>
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="34362b088ca74aaad19a8f2870527b85" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' idx='1' title='Microsoft Dynamics NAV' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
+                                </ui:UiElementExists.Target>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </ui:UiElementExists>
+                              <If Condition="[PackageContainsRecordsPopup]" DisplayName="Condition based on popup" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="If_35">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Then>
+                                  <Sequence sap2010:Annotation.AnnotationText="1. get text from popup&#xA;2. Check popup text with Table 81 in the package BOT_CASHBOOK_JNL&#xA;3. Click Yes if exists" DisplayName="If popup exists then" sap:VirtualizedContainerService.HintSize="200,138" sap2010:WorkflowViewState.IdRef="Sequence_61">
+                                    <Sequence.Variables>
+                                      <Variable x:TypeArguments="x:String" Name="Popup3_Text" />
+                                    </Sequence.Variables>
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <ui:GetAttribute ContinueOnError="{x:Null}" Attribute="aaname" DisplayName="Get Popup text" sap:VirtualizedContainerService.HintSize="242,51" sap2010:WorkflowViewState.IdRef="GetAttribute_18">
+                                      <ui:GetAttribute.Result>
+                                        <OutArgument x:TypeArguments="x:String">[Popuptext]</OutArgument>
+                                      </ui:GetAttribute.Result>
+                                      <ui:GetAttribute.Target>
+                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="31871eed5b141fe528b1b8dd3b9a03e6" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' idx='1' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='content' /&gt;&lt;wnd ctrlname='contentAndMessagesPlaceholder' /&gt;&lt;wnd ctrlname='ContentPlaceholder' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='1' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='1' /&gt;&lt;wnd cls='WindowsForms10.STATIC.*' title='*' /&gt;" WaitForReady="INTERACTIVE" />
+                                      </ui:GetAttribute.Target>
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                    </ui:GetAttribute>
+                                    <Assign DisplayName="popup text" sap:VirtualizedContainerService.HintSize="242,60" sap2010:WorkflowViewState.IdRef="Assign_12">
+                                      <Assign.To>
+                                        <OutArgument x:TypeArguments="x:String">[Popup3_Text]</OutArgument>
+                                      </Assign.To>
+                                      <Assign.Value>
+                                        <InArgument x:TypeArguments="x:String">["Table 81 in the package BOT_CASHBOOK_JNL contains"]</InArgument>
+                                      </Assign.Value>
+                                    </Assign>
+                                    <If Condition="[Popuptext.Contains(Popup3_Text)]" DisplayName="Condition based on popup text Table 81 in the package BOT_CASHBOOK_JNL" sap:VirtualizedContainerService.HintSize="242,51" sap2010:WorkflowViewState.IdRef="If_34">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <If.Then>
+                                        <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Cliick on 'Yes'" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="Click_54" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                          <ui:Click.CursorPosition>
+                                            <ui:CursorPosition Position="Center">
+                                              <ui:CursorPosition.OffsetX>
+                                                <InArgument x:TypeArguments="x:Int32" />
+                                              </ui:CursorPosition.OffsetX>
+                                              <ui:CursorPosition.OffsetY>
+                                                <InArgument x:TypeArguments="x:Int32" />
+                                              </ui:CursorPosition.OffsetY>
+                                            </ui:CursorPosition>
+                                          </ui:Click.CursorPosition>
+                                          <ui:Click.Target>
+                                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="a7d4434db45e9fea66a5e10fe4849c2d" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' idx='1' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='dialogActionBar' /&gt;&lt;wnd cls='WindowsForms10.BUTTON.*' title='Yes' /&gt;" WaitForReady="INTERACTIVE" />
+                                          </ui:Click.Target>
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                        </ui:Click>
+                                      </If.Then>
+                                    </If>
+                                  </Sequence>
+                                </If.Then>
+                              </If>
+                            </Sequence>
+                            <Delay Duration="00:00:05" sap:VirtualizedContainerService.HintSize="604,22" sap2010:WorkflowViewState.IdRef="Delay_6" />
+                            <Sequence DisplayName="Popup : Do you want to apply package data for the selected tables?" sap:VirtualizedContainerService.HintSize="604,66" sap2010:WorkflowViewState.IdRef="Sequence_64">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:UiElementExists DisplayName="Do you want to apply package data for the selected tables?" Exists="[ApplyPackagesPopup]" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="UiElementExists_24">
+                                <ui:UiElementExists.Target>
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="7239b7c2d92dd5b86f52da53c77fcd23" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
+                                </ui:UiElementExists.Target>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </ui:UiElementExists>
+                              <If Condition="[ApplyPackagesPopup]" DisplayName="Condition based on popup" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="If_37">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Then>
+                                  <Sequence sap2010:Annotation.AnnotationText="1. Get text from popup&#xA;2. Check popup text with 'Do you want to apply package data for the selected tables?'&#xA;3. Click Yes if exists" DisplayName="Popup - Do you want to apply package data for the selected table" sap:VirtualizedContainerService.HintSize="200,138" sap2010:WorkflowViewState.IdRef="Sequence_63">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <ui:GetAttribute ContinueOnError="{x:Null}" Attribute="aaname" DisplayName="Get poopup text - Apply packages to table" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="GetAttribute_19">
+                                      <ui:GetAttribute.Result>
+                                        <OutArgument x:TypeArguments="x:String">[Popuptext]</OutArgument>
+                                      </ui:GetAttribute.Result>
+                                      <ui:GetAttribute.Target>
+                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="19de1d46e54b9ff151c44348bb4db7d6" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='content' /&gt;&lt;wnd ctrlname='contentAndMessagesPlaceholder' /&gt;&lt;wnd ctrlname='ContentPlaceholder' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='1' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='1' /&gt;&lt;wnd cls='WindowsForms10.STATIC.*' title='*' /&gt;" WaitForReady="INTERACTIVE" />
+                                      </ui:GetAttribute.Target>
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                    </ui:GetAttribute>
+                                    <If Condition="[Popuptext.Contains(&quot;Do you want to apply package data for the selected tables?&quot;)]" DisplayName="Condition based on popup text" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="If_36">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <If.Then>
+                                        <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on Yes" sap:VirtualizedContainerService.HintSize="314,106" sap2010:WorkflowViewState.IdRef="Click_55" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                          <ui:Click.CursorPosition>
+                                            <ui:CursorPosition Position="Center">
+                                              <ui:CursorPosition.OffsetX>
+                                                <InArgument x:TypeArguments="x:Int32" />
+                                              </ui:CursorPosition.OffsetX>
+                                              <ui:CursorPosition.OffsetY>
+                                                <InArgument x:TypeArguments="x:Int32" />
+                                              </ui:CursorPosition.OffsetY>
+                                            </ui:CursorPosition>
+                                          </ui:Click.CursorPosition>
+                                          <ui:Click.Target>
+                                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="2872816aabde4b1eee550cbb18836efa" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='dialogActionBar' /&gt;&lt;wnd cls='WindowsForms10.BUTTON.*' title='Yes' /&gt;" WaitForReady="INTERACTIVE" />
+                                          </ui:Click.Target>
+                                        </ui:Click>
+                                      </If.Then>
+                                    </If>
+                                  </Sequence>
+                                </If.Then>
+                              </If>
+                            </Sequence>
+                            <Delay Duration="00:00:05" sap:VirtualizedContainerService.HintSize="604,22" sap2010:WorkflowViewState.IdRef="Delay_7" />
+                            <Sequence DisplayName="Popup : 1 tables are processed. 0 errors found." sap:VirtualizedContainerService.HintSize="604,234" sap2010:WorkflowViewState.IdRef="Sequence_66">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:UiElementExists DisplayName="1 tables are processed. 0 errors found." Exists="[TablesProcessedPopup]" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="UiElementExists_25">
+                                <ui:UiElementExists.Target>
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="4c45438daf23d5c40d7814cdb01867db" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;" TimeoutMS="60000" WaitForReady="INTERACTIVE" />
+                                </ui:UiElementExists.Target>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </ui:UiElementExists>
+                              <If Condition="[TablesProcessedPopup]" DisplayName="Condition based on popup" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="If_39">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Then>
+                                  <Sequence sap2010:Annotation.AnnotationText="1. Get text from popup&#xA;2. Check popup text with &quot;1 tables are processed. 0 errors found.&quot;&#xA;3. Click Yes if exists" DisplayName="If popup exists then" sap:VirtualizedContainerService.HintSize="222,338" sap2010:WorkflowViewState.IdRef="Sequence_65">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <ui:GetAttribute ContinueOnError="{x:Null}" Attribute="aaname" DisplayName="Get Popup text - 1Tables are processed." sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="GetAttribute_20">
+                                      <ui:GetAttribute.Result>
+                                        <OutArgument x:TypeArguments="x:String">[Popuptext]</OutArgument>
+                                      </ui:GetAttribute.Result>
+                                      <ui:GetAttribute.Target>
+                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="6b4e6ff8e2976d24882b33c90220fd41" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='content' /&gt;&lt;wnd ctrlname='contentAndMessagesPlaceholder' /&gt;&lt;wnd ctrlname='ContentPlaceholder' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='1' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='1' /&gt;&lt;wnd cls='WindowsForms10.STATIC.*' title='*' /&gt;" WaitForReady="INTERACTIVE" />
+                                      </ui:GetAttribute.Target>
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                    </ui:GetAttribute>
+                                    <If Condition="[Popuptext.Contains(&quot;1 tables are processed. 0 errors found.&quot;)]" DisplayName="Condition based on popup text" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="If_38">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <If.Then>
+                                        <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on Ok" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="Click_56" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                          <ui:Click.CursorPosition>
+                                            <ui:CursorPosition Position="Center">
+                                              <ui:CursorPosition.OffsetX>
+                                                <InArgument x:TypeArguments="x:Int32" />
+                                              </ui:CursorPosition.OffsetX>
+                                              <ui:CursorPosition.OffsetY>
+                                                <InArgument x:TypeArguments="x:Int32" />
+                                              </ui:CursorPosition.OffsetY>
+                                            </ui:CursorPosition>
+                                          </ui:Click.CursorPosition>
+                                          <ui:Click.Target>
+                                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="4e0309366e589fe91247bb69e344fcbf" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='dialogActionBar' /&gt;&lt;wnd cls='WindowsForms10.BUTTON.*' title='OK' /&gt;" WaitForReady="INTERACTIVE" />
+                                          </ui:Click.Target>
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                        </ui:Click>
+                                      </If.Then>
+                                    </If>
+                                  </Sequence>
+                                </If.Then>
+                              </If>
+                            </Sequence>
+                            <Delay Duration="00:00:05" sap:VirtualizedContainerService.HintSize="604,22" sap2010:WorkflowViewState.IdRef="Delay_8" />
+                          </Sequence>
+                          <FlowStep.Next>
+                            <FlowStep x:Name="__ReferenceID3">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <av:Point x:Key="ShapeLocation">50,534.5</av:Point>
+                                  <av:Size x:Key="ShapeSize">200,51</av:Size>
+                                  <av:PointCollection x:Key="ConnectorLocation">150,585.5 150,614.5</av:PointCollection>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Populate document number and post the journal" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="WindowScope_3" InformativeScreenshot="d6593b11082b716d9155546722631995" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;">
+                                <ui:WindowScope.Body>
+                                  <ActivityAction x:TypeArguments="x:Object">
+                                    <ActivityAction.Argument>
+                                      <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                    </ActivityAction.Argument>
+                                    <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="646,1812" sap2010:WorkflowViewState.IdRef="Sequence_26">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <ui:AnchorBase AnchorPosition="Auto" DisplayName="Type Batch Name" sap:VirtualizedContainerService.HintSize="604,51" sap2010:WorkflowViewState.IdRef="AnchorBase_2">
+                                        <ui:AnchorBase.Action>
+                                          <ActivityAction x:TypeArguments="ui:Anchor">
+                                            <ActivityAction.Argument>
+                                              <DelegateInArgument x:TypeArguments="ui:Anchor" Name="ContextAnchor" />
+                                            </ActivityAction.Argument>
+                                            <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" ContinueOnError="True" DisplayName="Type Into : Batch name" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_9" SendWindowMessages="False" SimulateType="False" Text="[In_Account_no]">
+                                              <ui:TypeInto.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="eafbcaabcf95fc1130dff392f9eb6ee1" Selector="&lt;wnd cls='WindowsForms10.EDIT.*' /&gt;" WaitForReady="INTERACTIVE" />
+                                              </ui:TypeInto.Target>
+                                            </ui:TypeInto>
+                                          </ActivityAction>
+                                        </ui:AnchorBase.Action>
+                                        <ui:AnchorBase.AnchorProvider>
+                                          <ui:WaitUiElementAppear FoundElement="{x:Null}" ContinueOnError="True" DisplayName="Find element : Batch Name" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="WaitUiElementAppear_2" WaitActive="False" WaitVisible="False">
+                                            <ui:WaitUiElementAppear.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="907335bd295123b03de94bbd175c0caf" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='content' /&gt;&lt;wnd ctrlname='contentAndMessagesPlaceholder' /&gt;&lt;wnd ctrlname='ContentPlaceholder' /&gt;&lt;wnd cls='WindowsForms10.STATIC.*' title='Batch Name:' /&gt;" WaitForReady="INTERACTIVE" />
+                                            </ui:WaitUiElementAppear.Target>
+                                          </ui:WaitUiElementAppear>
+                                        </ui:AnchorBase.AnchorProvider>
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                      </ui:AnchorBase>
+                                      <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Send Hotkey" EmptyField="False" sap:VirtualizedContainerService.HintSize="604,51" sap2010:WorkflowViewState.IdRef="SendHotkey_5" Key="enter" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
+                                        <ui:SendHotkey.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" WaitForReady="INTERACTIVE" />
+                                        </ui:SendHotkey.Target>
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                      </ui:SendHotkey>
+                                      <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Send Hotkey" EmptyField="False" sap:VirtualizedContainerService.HintSize="604,51" sap2010:WorkflowViewState.IdRef="SendHotkey_8" Key="up" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
+                                        <ui:SendHotkey.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" WaitForReady="INTERACTIVE" />
+                                        </ui:SendHotkey.Target>
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                      </ui:SendHotkey>
+                                      <ui:ClickImage ContinueOnError="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on Renumber Document Numbers" sap:VirtualizedContainerService.HintSize="604,51" sap2010:WorkflowViewState.IdRef="ClickImage_1" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False">
+                                        <ui:ClickImage.CursorPosition>
+                                          <ui:CursorPosition Position="Center">
+                                            <ui:CursorPosition.OffsetX>
+                                              <InArgument x:TypeArguments="x:Int32" />
+                                            </ui:CursorPosition.OffsetX>
+                                            <ui:CursorPosition.OffsetY>
+                                              <InArgument x:TypeArguments="x:Int32" />
+                                            </ui:CursorPosition.OffsetY>
+                                          </ui:CursorPosition>
+                                        </ui:ClickImage.CursorPosition>
+                                        <ui:ClickImage.Image>
+                                          <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" TargetImageBase64="iVBORw0KGgoAAAANSUhEUgAAAHQAAABcCAYAAAC/ZZF8AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAVPSURBVHhe7Zk9bxxVFIa3de2/4sY/wQUVokOR6/gPWEpjKFAKGyorhSvTUFAg2YWxkEIirYQSKQWOlsKSTYQgAoRQlGDAdtAl73he69XZmdndWc/uzPF5pKu9n+fee56d8RJ6g8EgRZlfuWl6+WfghBDqjBDqjBDqjBDqjBDqjBDqjBDqjBDqjE4L3djYmHlpO50XWsb+/n5eG6buWAhtmBA6TAg1hNA5EkKH6bxQCJhVCaENgwQ/fv6ysEBAUT9K3bEQ2jAhdJgQakoInSOzFtoF4kfRmOXk5CTftd10XmgZkFBGnbGf//gr3fv8afrzzb95TzsJoYaiMci88+m36b2Pv053H/RbLTWEGuzY+eXbTCBEQigKntS2EkINOoYnc/WzR+nh979cS8WT+tPvb/IZ7SN+FBUU/ACCNL5mUfaevEivzs4zyW0mntACrEyUDzcfZkLbTgg1lMls82tWCaHCKJlV+7WFEJoDaZBXJhOE0IZBgiFnmgJGyeTcENowN/GEjvNkkhDaMNMKnUQmCKENU1fo6elpevHb60KZ6C8jhDZMXaGv/76YWCYIoQ2DBE9Stra20j/nl9nar777cUjmwcFB4TotbafTQuvw6PnL9MH9b7L6l/3TsZ7MLnHrhOL/lOCpfP+TK6l4/Xri1gmFzI++eJb6P/yaLt/+l/f64dYJ9U4IdUYIdUYIdUYIdUYrhOKf4hYWFlKv17suZ2dn+eh86Pf7aXV1NW91h9YIXV5eThcXV/9NuLu7O/dkhtApsEJtex6E0CkoekI3NzezOlhfX79+FbOfa3Z2dq7Hjo6OsjHM39vby+pA26wvLi5ma1DHfjYGhereHAO6RsUj7vb29tD8WdHKv6FWpspZWVnJEsU1nKuv6VFCsQf+RlfFgFDM4zq0l5aWsi9d0ReO8yBUx2ZN655QTRyAQIpmQfJ0DdD2KKE6BgH8AaavWa0Tfpn4pdBCiRpvHrTylatJZxIt8xaqMZQQ+o4iOXgVIjFInk0sqBKqr06AJNcRiidPx/SVq28RJYS+w8oBKtK+dpGwKqEAieX8tbW12k+oxlFRiMN+FL5FQmhwo4RQZ4RQZ4RQZ4wUih8a+scfbY8cHh5m9zs+Ps57rsC/+mDspkAs/EhrirGE6iX5z1pdBGdHKQKJxl3tF9a9UFCVmDYzSigSjaICb4VQtPWbjDpfyfawaHMMybFrtc065mE++8tisx+FZ6QQu4YxWSxMNOLouAplbKJtuy/quifPh37MRbFjQNdgDkGbY5iv69FPphZKAQQbsY1PPRTQtUDbqOsBeWjCy7BONEbVGsTVsypMNNBzo26lEW3rvvYeGg/zMcZ1+OTZMY9rgMbXeHpfS22hPKANrJuVrdU12rZj9oKMh4IL2gI0CUDbNp6CObwT4F6Yz/VVse0YzwM0ttYJ90K/vRPPq/EA2jYOqCUUgbiRCgCYyz57CKDjQNt2zArAGObYeQrOVpZ0G0+xiUYbe2A+11fFtmN6d/QzttYJ72VjKEW5xFz0650mFopNNZm8NME426jbwwMcgjExl/GsKIxpbD0LYhRd3iZF2zaegjn2rGhjT12vc/QMdl8VoLFRt2O8M+Lr/RVdo9icjSUUwVjspUHVuK5nMvGp83mgSYTikzEYB+BTE6ttXWPRpBPO13hcj6Kx7b66h8ZmXeModoz31Xn27pwDRgoNukUIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUYIdUZvMBikKH5KPKGuSOl/FSb2R78JrjUAAAAASUVORK5CYII=" />
+                                        </ui:ClickImage.Image>
+                                        <ui:ClickImage.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:ClickImage.Target>
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                      </ui:ClickImage>
+                                      <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on Preview posting" sap:VirtualizedContainerService.HintSize="604,106" sap2010:WorkflowViewState.IdRef="Click_32" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                        <ui:Click.CursorPosition>
+                                          <ui:CursorPosition Position="Center">
+                                            <ui:CursorPosition.OffsetX>
+                                              <InArgument x:TypeArguments="x:Int32" />
+                                            </ui:CursorPosition.OffsetX>
+                                            <ui:CursorPosition.OffsetY>
+                                              <InArgument x:TypeArguments="x:Int32" />
+                                            </ui:CursorPosition.OffsetY>
+                                          </ui:CursorPosition>
+                                        </ui:Click.CursorPosition>
+                                        <ui:Click.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="1246b406e5ae9749cfdf8944dcb947d5" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd ctrlname='MenuContentPane' /&gt;&lt;wnd cls='WindowsForms10.Window.*' /&gt;&lt;wnd cls='HwndWrapper*' /&gt;&lt;ctrl name='Preview Posting' role='push button' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:Click.Target>
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                      </ui:Click>
+                                      <Delay Duration="00:00:15" sap:VirtualizedContainerService.HintSize="604,22" sap2010:WorkflowViewState.IdRef="Delay_9" />
+                                      <Sequence DisplayName="Popup : Error Popup in NAV" sap:VirtualizedContainerService.HintSize="604,1148" sap2010:WorkflowViewState.IdRef="Sequence_70">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <Assign DisplayName="Initializing the variable" sap:VirtualizedContainerService.HintSize="562,60" sap2010:WorkflowViewState.IdRef="Assign_14">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:Boolean">[Out_ErrorPopup_PaymentJournal]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                        <ui:UiElementExists DisplayName="Popup related to Error (Posting date / Account holding)" Exists="[Out_ErrorPopup_PaymentJournal]" sap:VirtualizedContainerService.HintSize="562,106" sap2010:WorkflowViewState.IdRef="UiElementExists_26">
+                                          <ui:UiElementExists.Target>
+                                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="ccc118c3ff3f58666b12d542362579ab" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;" TimeoutMS="3000" WaitForReady="COMPLETE" />
+                                          </ui:UiElementExists.Target>
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                        </ui:UiElementExists>
+                                        <If Condition="[Out_ErrorPopup_PaymentJournal]" DisplayName="Condition based on popup " sap:VirtualizedContainerService.HintSize="562,810" sap2010:WorkflowViewState.IdRef="If_41">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <If.Then>
+                                            <Sequence sap2010:Annotation.AnnotationText="1. Click ok if text in popup contains Posting range or Account holding" DisplayName="If popup exists then" sap:VirtualizedContainerService.HintSize="526,634" sap2010:WorkflowViewState.IdRef="Sequence_69">
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                              <ui:GetAttribute ContinueOnError="{x:Null}" Attribute="aaname" DisplayName="Get popup text - Error popup" sap:VirtualizedContainerService.HintSize="484,51" sap2010:WorkflowViewState.IdRef="GetAttribute_21">
+                                                <ui:GetAttribute.Result>
+                                                  <OutArgument x:TypeArguments="x:String">[Popuptext]</OutArgument>
+                                                </ui:GetAttribute.Result>
+                                                <ui:GetAttribute.Target>
+                                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="8373774c9602977981954974951edfdf" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='content' /&gt;&lt;wnd ctrlname='contentAndMessagesPlaceholder' /&gt;&lt;wnd ctrlname='ContentPlaceholder' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='1' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='1' /&gt;&lt;wnd cls='WindowsForms10.STATIC.*' title='*' /&gt;" WaitForReady="INTERACTIVE" />
+                                                </ui:GetAttribute.Target>
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                              </ui:GetAttribute>
+                                              <If Condition="[Popuptext.Contains(&quot;Posting date is not within your range&quot;) or Popuptext.Contains(&quot;Please retry the activity.&quot;)]" DisplayName="Condition based on popup text" sap:VirtualizedContainerService.HintSize="484,420" sap2010:WorkflowViewState.IdRef="If_40">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <If.Then>
+                                                  <Sequence DisplayName="Poopup contains &quot;Posting date / Retry the activity&quot;" sap:VirtualizedContainerService.HintSize="272,244" sap2010:WorkflowViewState.IdRef="Sequence_68">
+                                                    <sap:WorkflowViewStateService.ViewState>
+                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                      </scg:Dictionary>
+                                                    </sap:WorkflowViewStateService.ViewState>
+                                                    <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on ok" sap:VirtualizedContainerService.HintSize="230,51" sap2010:WorkflowViewState.IdRef="Click_58" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                                      <ui:Click.CursorPosition>
+                                                        <ui:CursorPosition Position="Center">
+                                                          <ui:CursorPosition.OffsetX>
+                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                          </ui:CursorPosition.OffsetX>
+                                                          <ui:CursorPosition.OffsetY>
+                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                          </ui:CursorPosition.OffsetY>
+                                                        </ui:CursorPosition>
+                                                      </ui:Click.CursorPosition>
+                                                      <ui:Click.Target>
+                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="be1db290e2f868b624cd78b325bda589" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='dialogActionBar' /&gt;&lt;wnd cls='WindowsForms10.BUTTON.*' title='OK' /&gt;" WaitForReady="INTERACTIVE" />
+                                                      </ui:Click.Target>
+                                                      <sap:WorkflowViewStateService.ViewState>
+                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                        </scg:Dictionary>
+                                                      </sap:WorkflowViewStateService.ViewState>
+                                                    </ui:Click>
+                                                    <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="230,61" sap2010:WorkflowViewState.IdRef="WriteLine_5" Text="Found error popup in payment Journal page" />
+                                                  </Sequence>
+                                                </If.Then>
+                                              </If>
+                                            </Sequence>
+                                          </If.Then>
+                                        </If>
+                                      </Sequence>
+                                    </Sequence>
+                                  </ActivityAction>
+                                </ui:WindowScope.Body>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </ui:WindowScope>
+                              <FlowStep.Next>
+                                <FlowStep x:Name="__ReferenceID7">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <av:Point x:Key="ShapeLocation">50,614.5</av:Point>
+                                      <av:Size x:Key="ShapeSize">200,66</av:Size>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <Sequence DisplayName="Post the journal" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_71">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <If Condition="[Out_ErrorPopup_PaymentJournal]" DisplayName="If - Check error popup status" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="If_42">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <If.Else>
+                                        <Sequence DisplayName="Continue the process" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_72">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window : Posting Preview" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="WindowScope_9" InformativeScreenshot="6861d31d9cdfafad2333621741a7fa75" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='View - Posting Preview' /&gt;">
+                                            <ui:WindowScope.Body>
+                                              <ActivityAction x:TypeArguments="x:Object">
+                                                <ActivityAction.Argument>
+                                                  <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                                </ActivityAction.Argument>
+                                                <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on Close button" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_60" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                                  <ui:Click.CursorPosition>
+                                                    <ui:CursorPosition Position="Center">
+                                                      <ui:CursorPosition.OffsetX>
+                                                        <InArgument x:TypeArguments="x:Int32" />
+                                                      </ui:CursorPosition.OffsetX>
+                                                      <ui:CursorPosition.OffsetY>
+                                                        <InArgument x:TypeArguments="x:Int32" />
+                                                      </ui:CursorPosition.OffsetY>
+                                                    </ui:CursorPosition>
+                                                  </ui:Click.CursorPosition>
+                                                  <ui:Click.Target>
+                                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="b130d8150310caccfd787df1f12d8474" Selector="&lt;wnd cls='WindowsForms10.Window.*' title='View - Posting Preview' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='ActionBar' /&gt;&lt;wnd cls='WindowsForms10.BUTTON.*' title='Close' /&gt;" WaitForReady="INTERACTIVE" />
+                                                  </ui:Click.Target>
+                                                </ui:Click>
+                                              </ActivityAction>
+                                            </ui:WindowScope.Body>
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                          </ui:WindowScope>
+                                          <Sequence DisplayName="Check Balance" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_93">
+                                            <Sequence.Variables>
+                                              <Variable x:TypeArguments="x:String" Name="Balance" />
+                                              <Variable x:TypeArguments="x:String" Name="TotalBalance" />
+                                              <Variable x:TypeArguments="x:String" Name="TotalBalance_Selector" />
+                                              <Variable x:TypeArguments="x:String" Name="BalanceTable" />
+                                              <Variable x:TypeArguments="s:String[]" Name="Split_Balances" />
+                                            </Sequence.Variables>
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <TryCatch DisplayName="Get Balance" sap:VirtualizedContainerService.HintSize="334,51" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                              <TryCatch.Try>
+                                                <ui:GetFullText DisplayName="Get balance " sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="GetFullText_1" IgnoreHidden="False">
+                                                  <ui:GetFullText.Target>
+                                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="1688418b14e8d2a29980d86181b057e5" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal -*' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='content' /&gt;&lt;wnd ctrlname='contentAndMessagesPlaceholder' /&gt;&lt;wnd ctrlname='ContentPlaceholder' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='7' /&gt;" WaitForReady="INTERACTIVE" />
+                                                  </ui:GetFullText.Target>
+                                                  <ui:GetFullText.Text>
+                                                    <OutArgument x:TypeArguments="x:String">[BalanceTable]</OutArgument>
+                                                  </ui:GetFullText.Text>
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                </ui:GetFullText>
+                                              </TryCatch.Try>
+                                              <TryCatch.Catches>
+                                                <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                  <ActivityAction x:TypeArguments="s:Exception">
+                                                    <ActivityAction.Argument>
+                                                      <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                                                    </ActivityAction.Argument>
+                                                    <Sequence DisplayName="If error occurs" sap:VirtualizedContainerService.HintSize="222,51" sap2010:WorkflowViewState.IdRef="Sequence_85">
+                                                      <sap:WorkflowViewStateService.ViewState>
+                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                        </scg:Dictionary>
+                                                      </sap:WorkflowViewStateService.ViewState>
+                                                      <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Send Hotkey " EmptyField="False" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="SendHotkey_13" Key="up" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
+                                                        <ui:SendHotkey.Target>
+                                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="35722452bc16ceed2d89bde0e37bd50d" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal*' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Edit - Payment Journal*' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='content' /&gt;&lt;wnd ctrlname='contentAndMessagesPlaceholder' /&gt;&lt;wnd ctrlname='ContentPlaceholder' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='2' /&gt;&lt;wnd ctrlname='_DataGrid' /&gt;" WaitForReady="INTERACTIVE" />
+                                                        </ui:SendHotkey.Target>
+                                                        <sap:WorkflowViewStateService.ViewState>
+                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                          </scg:Dictionary>
+                                                        </sap:WorkflowViewStateService.ViewState>
+                                                      </ui:SendHotkey>
+                                                      <ui:GetFullText DisplayName="Get balance " sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="GetFullText_2" IgnoreHidden="False">
+                                                        <ui:GetFullText.Target>
+                                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="1688418b14e8d2a29980d86181b057e5" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal -*' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='content' /&gt;&lt;wnd ctrlname='contentAndMessagesPlaceholder' /&gt;&lt;wnd ctrlname='ContentPlaceholder' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='10' /&gt;" WaitForReady="INTERACTIVE" />
+                                                        </ui:GetFullText.Target>
+                                                        <ui:GetFullText.Text>
+                                                          <OutArgument x:TypeArguments="x:String">[BalanceTable]</OutArgument>
+                                                        </ui:GetFullText.Text>
+                                                        <sap:WorkflowViewStateService.ViewState>
+                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                          </scg:Dictionary>
+                                                        </sap:WorkflowViewStateService.ViewState>
+                                                      </ui:GetFullText>
+                                                    </Sequence>
+                                                  </ActivityAction>
+                                                </Catch>
+                                              </TryCatch.Catches>
+                                            </TryCatch>
+                                            <p:SplitString DisplayName="Split string" sap:VirtualizedContainerService.HintSize="334,132" sap2010:WorkflowViewState.IdRef="SplitString_1" Input="[BalanceTable]" Result="[Split_Balances]" Separator="[Environment.NewLine]" StringSplitOptions="None" />
+                                            <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_25">
+                                              <Assign.To>
+                                                <OutArgument x:TypeArguments="x:String">[Balance]</OutArgument>
+                                              </Assign.To>
+                                              <Assign.Value>
+                                                <InArgument x:TypeArguments="x:String">[Split_Balances(6).ToString]</InArgument>
+                                              </Assign.Value>
+                                            </Assign>
+                                            <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_26">
+                                              <Assign.To>
+                                                <OutArgument x:TypeArguments="x:String">[TotalBalance]</OutArgument>
+                                              </Assign.To>
+                                              <Assign.Value>
+                                                <InArgument x:TypeArguments="x:String">[Split_Balances(7).ToString]</InArgument>
+                                              </Assign.Value>
+                                            </Assign>
+                                            <If Condition="[Balance = &quot;&quot; or TotalBalance = &quot;&quot;]" DisplayName="If - Check Balances" sap:VirtualizedContainerService.HintSize="334,51" sap2010:WorkflowViewState.IdRef="If_55">
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                              <If.Then>
+                                                <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_27">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Boolean">[Out_ZeroDifference]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                              </If.Then>
+                                              <If.Else>
+                                                <If Condition="[Balance.Trim = &quot;0,00&quot; and TotalBalance.Trim = &quot;0,00&quot; or Balance.Trim = &quot;0.00&quot; and TotalBalance.Trim = &quot;0.00&quot;]" DisplayName="If - Check Balance" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="If_54">
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                  <If.Then>
+                                                    <Sequence DisplayName="Post the journal" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_92">
+                                                      <Sequence.Variables>
+                                                        <Variable x:TypeArguments="x:Boolean" Name="JournalPage" />
+                                                      </Sequence.Variables>
+                                                      <sap:WorkflowViewStateService.ViewState>
+                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                        </scg:Dictionary>
+                                                      </sap:WorkflowViewStateService.ViewState>
+                                                      <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_28">
+                                                        <Assign.To>
+                                                          <OutArgument x:TypeArguments="x:Boolean">[Out_ZeroDifference]</OutArgument>
+                                                        </Assign.To>
+                                                        <Assign.Value>
+                                                          <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                                        </Assign.Value>
+                                                      </Assign>
+                                                      <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on 'Post'" sap:VirtualizedContainerService.HintSize="262,51" sap2010:WorkflowViewState.IdRef="Click_66" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                                        <ui:Click.CursorPosition>
+                                                          <ui:CursorPosition Position="Center">
+                                                            <ui:CursorPosition.OffsetX>
+                                                              <InArgument x:TypeArguments="x:Int32" />
+                                                            </ui:CursorPosition.OffsetX>
+                                                            <ui:CursorPosition.OffsetY>
+                                                              <InArgument x:TypeArguments="x:Int32" />
+                                                            </ui:CursorPosition.OffsetY>
+                                                          </ui:CursorPosition>
+                                                        </ui:Click.CursorPosition>
+                                                        <ui:Click.Target>
+                                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="f1ec9ac4ed3724cb00c39a9f06807cc9" Selector="&lt;wnd cls='WindowsForms10.Window.*' /&gt;&lt;wnd ctrlname='MenuContentPane' /&gt;&lt;wnd cls='WindowsForms10.Window.*' /&gt;&lt;wnd cls='HwndWrapper*' /&gt;&lt;ctrl aastate='focusable' name='Post' role='push button' /&gt;" WaitForReady="INTERACTIVE" />
+                                                        </ui:Click.Target>
+                                                        <sap:WorkflowViewStateService.ViewState>
+                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                          </scg:Dictionary>
+                                                        </sap:WorkflowViewStateService.ViewState>
+                                                      </ui:Click>
+                                                      <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Post the journal" sap:VirtualizedContainerService.HintSize="262,51" sap2010:WorkflowViewState.IdRef="WindowScope_13" InformativeScreenshot="b30b48444d4fcb304e7ad39d40c4ec23" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *-*' /&gt;">
+                                                        <ui:WindowScope.Body>
+                                                          <ActivityAction x:TypeArguments="x:Object">
+                                                            <ActivityAction.Argument>
+                                                              <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                                            </ActivityAction.Argument>
+                                                            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="242,388" sap2010:WorkflowViewState.IdRef="Sequence_91">
+                                                              <sap:WorkflowViewStateService.ViewState>
+                                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                </scg:Dictionary>
+                                                              </sap:WorkflowViewStateService.ViewState>
+                                                              <Delay Duration="00:00:02" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Delay_12" />
+                                                              <Sequence DisplayName="Popup : Do you want to post the journal lines?" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_87">
+                                                                <Sequence.Variables>
+                                                                  <Variable x:TypeArguments="x:Boolean" Name="PostJournal_Popup" />
+                                                                </Sequence.Variables>
+                                                                <sap:WorkflowViewStateService.ViewState>
+                                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                  </scg:Dictionary>
+                                                                </sap:WorkflowViewStateService.ViewState>
+                                                                <ui:UiElementExists DisplayName="Do you want to post the journal lines?" Exists="[PostJournal_Popup]" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="UiElementExists_30">
+                                                                  <ui:UiElementExists.Target>
+                                                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="52b3fac35fc083b616dee9f87feb6a83" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
+                                                                  </ui:UiElementExists.Target>
+                                                                  <sap:WorkflowViewStateService.ViewState>
+                                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                    </scg:Dictionary>
+                                                                  </sap:WorkflowViewStateService.ViewState>
+                                                                </ui:UiElementExists>
+                                                                <If Condition="[PostJournal_Popup]" DisplayName="Condition based on popup" sap:VirtualizedContainerService.HintSize="464,271" sap2010:WorkflowViewState.IdRef="If_50">
+                                                                  <sap:WorkflowViewStateService.ViewState>
+                                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                    </scg:Dictionary>
+                                                                  </sap:WorkflowViewStateService.ViewState>
+                                                                  <If.Then>
+                                                                    <Sequence sap2010:Annotation.AnnotationText="1. Get text from popup &#xA;2. Check the text with Do you want to post the journal lines?&#xA;3. If exists then click 'Yes'" DisplayName="If popup exists then" sap:VirtualizedContainerService.HintSize="200,123" sap2010:WorkflowViewState.IdRef="Sequence_86">
+                                                                      <sap:WorkflowViewStateService.ViewState>
+                                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                                                        </scg:Dictionary>
+                                                                      </sap:WorkflowViewStateService.ViewState>
+                                                                      <ui:GetAttribute ContinueOnError="{x:Null}" Attribute="aaname" DisplayName="Get Popup text" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="GetAttribute_27">
+                                                                        <ui:GetAttribute.Result>
+                                                                          <OutArgument x:TypeArguments="x:String">[Popuptext]</OutArgument>
+                                                                        </ui:GetAttribute.Result>
+                                                                        <ui:GetAttribute.Target>
+                                                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="51ecef97c6b065ddb644a2296387c91e" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='content' /&gt;&lt;wnd ctrlname='contentAndMessagesPlaceholder' /&gt;&lt;wnd ctrlname='ContentPlaceholder' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='1' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='1' /&gt;&lt;wnd cls='WindowsForms10.STATIC.*' title='*' /&gt;" WaitForReady="INTERACTIVE" />
+                                                                        </ui:GetAttribute.Target>
+                                                                        <sap:WorkflowViewStateService.ViewState>
+                                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                          </scg:Dictionary>
+                                                                        </sap:WorkflowViewStateService.ViewState>
+                                                                      </ui:GetAttribute>
+                                                                      <If Condition="[Popuptext.Contains(&quot;Do you want to post the journal lines?&quot;)]" DisplayName="Condition based on popup text" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="If_49">
+                                                                        <sap:WorkflowViewStateService.ViewState>
+                                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                          </scg:Dictionary>
+                                                                        </sap:WorkflowViewStateService.ViewState>
+                                                                        <If.Then>
+                                                                          <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on Yes" sap:VirtualizedContainerService.HintSize="314,106" sap2010:WorkflowViewState.IdRef="Click_67" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                                                            <ui:Click.CursorPosition>
+                                                                              <ui:CursorPosition Position="Center">
+                                                                                <ui:CursorPosition.OffsetX>
+                                                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                                                </ui:CursorPosition.OffsetX>
+                                                                                <ui:CursorPosition.OffsetY>
+                                                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                                                </ui:CursorPosition.OffsetY>
+                                                                              </ui:CursorPosition>
+                                                                            </ui:Click.CursorPosition>
+                                                                            <ui:Click.Target>
+                                                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="6b6013af4c1c2c7f967550f5896073ab" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='dialogActionBar' /&gt;&lt;wnd cls='WindowsForms10.BUTTON.*' title='Yes' /&gt;" WaitForReady="INTERACTIVE" />
+                                                                            </ui:Click.Target>
+                                                                          </ui:Click>
+                                                                        </If.Then>
+                                                                      </If>
+                                                                    </Sequence>
+                                                                  </If.Then>
+                                                                </If>
+                                                              </Sequence>
+                                                              <Delay Duration="00:00:02" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Delay_13" />
+                                                              <Sequence DisplayName="Popup : The journal lines were successfully posted" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_90">
+                                                                <Sequence.Variables>
+                                                                  <Variable x:TypeArguments="x:Boolean" Name="JournalPosted_Popup" />
+                                                                </Sequence.Variables>
+                                                                <sap:WorkflowViewStateService.ViewState>
+                                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                  </scg:Dictionary>
+                                                                </sap:WorkflowViewStateService.ViewState>
+                                                                <ui:UiElementExists DisplayName="The journal lines were successfully posted" Exists="[Bi_JournalPosted]" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="UiElementExists_31">
+                                                                  <ui:UiElementExists.Target>
+                                                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="ccec2848888bdb763d3e5a1c297be33c" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;" TimeoutMS="30000" WaitForReady="INTERACTIVE" />
+                                                                  </ui:UiElementExists.Target>
+                                                                  <sap:WorkflowViewStateService.ViewState>
+                                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                    </scg:Dictionary>
+                                                                  </sap:WorkflowViewStateService.ViewState>
+                                                                </ui:UiElementExists>
+                                                                <If Condition="[Bi_JournalPosted = True]" DisplayName="Condition based on popup" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="If_52">
+                                                                  <sap:WorkflowViewStateService.ViewState>
+                                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                    </scg:Dictionary>
+                                                                  </sap:WorkflowViewStateService.ViewState>
+                                                                  <If.Then>
+                                                                    <Sequence sap2010:Annotation.AnnotationText="1. Get text from popup &#xA;2. Check the text with The journal lines were successfully posted.&#xA;3. If exists then click 'Ok'" DisplayName="If popup exists then" sap:VirtualizedContainerService.HintSize="242,306" sap2010:WorkflowViewState.IdRef="Sequence_89">
+                                                                      <sap:WorkflowViewStateService.ViewState>
+                                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                                                        </scg:Dictionary>
+                                                                      </sap:WorkflowViewStateService.ViewState>
+                                                                      <ui:GetAttribute Attribute="aaname" ContinueOnError="True" DisplayName="Get Popup text" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="GetAttribute_28">
+                                                                        <ui:GetAttribute.Result>
+                                                                          <OutArgument x:TypeArguments="x:String">[Popuptext]</OutArgument>
+                                                                        </ui:GetAttribute.Result>
+                                                                        <ui:GetAttribute.Target>
+                                                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="bc5f55aa09ec9086469b6ff530a732f1" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='content' /&gt;&lt;wnd ctrlname='contentAndMessagesPlaceholder' /&gt;&lt;wnd ctrlname='ContentPlaceholder' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='1' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='1' /&gt;&lt;wnd cls='WindowsForms10.STATIC.*' title='*' /&gt;" WaitForReady="INTERACTIVE" />
+                                                                        </ui:GetAttribute.Target>
+                                                                        <sap:WorkflowViewStateService.ViewState>
+                                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                          </scg:Dictionary>
+                                                                        </sap:WorkflowViewStateService.ViewState>
+                                                                      </ui:GetAttribute>
+                                                                      <If Condition="[Popuptext.Contains(&quot;The journal lines were successfully posted.&quot;)]" DisplayName="Condition based on popup text" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="If_51">
+                                                                        <sap:WorkflowViewStateService.ViewState>
+                                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                          </scg:Dictionary>
+                                                                        </sap:WorkflowViewStateService.ViewState>
+                                                                        <If.Then>
+                                                                          <Sequence DisplayName="Click on ok" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_88">
+                                                                            <sap:WorkflowViewStateService.ViewState>
+                                                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                              </scg:Dictionary>
+                                                                            </sap:WorkflowViewStateService.ViewState>
+                                                                            <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" ContinueOnError="True" DisplayName="Click on ok" sap:VirtualizedContainerService.HintSize="262,51" sap2010:WorkflowViewState.IdRef="Click_68" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                                                              <ui:Click.CursorPosition>
+                                                                                <ui:CursorPosition Position="Center">
+                                                                                  <ui:CursorPosition.OffsetX>
+                                                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                                                  </ui:CursorPosition.OffsetX>
+                                                                                  <ui:CursorPosition.OffsetY>
+                                                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                                                  </ui:CursorPosition.OffsetY>
+                                                                                </ui:CursorPosition>
+                                                                              </ui:Click.CursorPosition>
+                                                                              <ui:Click.Target>
+                                                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="e10cf2581f0a70d84f0e50a391fac418" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='dialogActionBar' /&gt;&lt;wnd cls='WindowsForms10.BUTTON.*' title='OK' /&gt;" WaitForReady="INTERACTIVE" />
+                                                                              </ui:Click.Target>
+                                                                              <sap:WorkflowViewStateService.ViewState>
+                                                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                                </scg:Dictionary>
+                                                                              </sap:WorkflowViewStateService.ViewState>
+                                                                            </ui:Click>
+                                                                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="262,51" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[In_Account_no+&quot; Journal posted&quot;]">
+                                                                              <sap:WorkflowViewStateService.ViewState>
+                                                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                                </scg:Dictionary>
+                                                                              </sap:WorkflowViewStateService.ViewState>
+                                                                            </ui:LogMessage>
+                                                                            <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_30">
+                                                                              <Assign.To>
+                                                                                <OutArgument x:TypeArguments="x:Boolean">[Bi_JournalPosted]</OutArgument>
+                                                                              </Assign.To>
+                                                                              <Assign.Value>
+                                                                                <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                                                              </Assign.Value>
+                                                                            </Assign>
+                                                                          </Sequence>
+                                                                        </If.Then>
+                                                                        <If.Else>
+                                                                          <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_22">
+                                                                            <Assign.To>
+                                                                              <OutArgument x:TypeArguments="x:Boolean">[Bi_JournalPosted]</OutArgument>
+                                                                            </Assign.To>
+                                                                            <Assign.Value>
+                                                                              <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                                                            </Assign.Value>
+                                                                          </Assign>
+                                                                        </If.Else>
+                                                                      </If>
+                                                                    </Sequence>
+                                                                  </If.Then>
+                                                                </If>
+                                                              </Sequence>
+                                                            </Sequence>
+                                                          </ActivityAction>
+                                                        </ui:WindowScope.Body>
+                                                        <sap:WorkflowViewStateService.ViewState>
+                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                          </scg:Dictionary>
+                                                        </sap:WorkflowViewStateService.ViewState>
+                                                      </ui:WindowScope>
+                                                      <ui:UiElementExists DisplayName="Element Exists - Payment Journal page" Exists="[JournalPage]" sap:VirtualizedContainerService.HintSize="262,51" sap2010:WorkflowViewState.IdRef="UiElementExists_32">
+                                                        <ui:UiElementExists.Target>
+                                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="7a8c4337f26db74c306372ced4c21f7f" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal*' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
+                                                        </ui:UiElementExists.Target>
+                                                        <sap:WorkflowViewStateService.ViewState>
+                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                          </scg:Dictionary>
+                                                        </sap:WorkflowViewStateService.ViewState>
+                                                      </ui:UiElementExists>
+                                                      <If Condition="[JournalPage]" DisplayName="If - Check Journal page &amp; click on Ok" sap:VirtualizedContainerService.HintSize="262,51" sap2010:WorkflowViewState.IdRef="If_53">
+                                                        <sap:WorkflowViewStateService.ViewState>
+                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                          </scg:Dictionary>
+                                                        </sap:WorkflowViewStateService.ViewState>
+                                                        <If.Then>
+                                                          <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on Ok" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="Click_69" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                                            <ui:Click.CursorPosition>
+                                                              <ui:CursorPosition Position="Center">
+                                                                <ui:CursorPosition.OffsetX>
+                                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                                </ui:CursorPosition.OffsetX>
+                                                                <ui:CursorPosition.OffsetY>
+                                                                  <InArgument x:TypeArguments="x:Int32" />
+                                                                </ui:CursorPosition.OffsetY>
+                                                              </ui:CursorPosition>
+                                                            </ui:Click.CursorPosition>
+                                                            <ui:Click.Target>
+                                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="17078b046d03b40acf18f09806b7f242" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal*' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Edit - Payment Journal*' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd cls='WindowsForms10.BUTTON.*' title='OK' /&gt;" WaitForReady="INTERACTIVE" />
+                                                            </ui:Click.Target>
+                                                            <sap:WorkflowViewStateService.ViewState>
+                                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                              </scg:Dictionary>
+                                                            </sap:WorkflowViewStateService.ViewState>
+                                                          </ui:Click>
+                                                        </If.Then>
+                                                      </If>
+                                                    </Sequence>
+                                                  </If.Then>
+                                                  <If.Else>
+                                                    <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_24">
+                                                      <Assign.To>
+                                                        <OutArgument x:TypeArguments="x:Boolean">[Out_ZeroDifference]</OutArgument>
+                                                      </Assign.To>
+                                                      <Assign.Value>
+                                                        <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                                      </Assign.Value>
+                                                    </Assign>
+                                                  </If.Else>
+                                                </If>
+                                              </If.Else>
+                                            </If>
+                                          </Sequence>
+                                        </Sequence>
+                                      </If.Else>
+                                    </If>
+                                  </Sequence>
+                                </FlowStep>
+                              </FlowStep.Next>
+                            </FlowStep>
+                          </FlowStep.Next>
+                        </FlowStep>
+                      </FlowStep.Next>
+                    </FlowStep>
+                  </FlowDecision.True>
+                  <FlowDecision.False>
+                    <FlowStep x:Name="__ReferenceID4">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <av:Point x:Key="ShapeLocation">340,357</av:Point>
+                          <av:Size x:Key="ShapeSize">200,66</av:Size>
+                          <av:PointCollection x:Key="ConnectorLocation">440,423 440,446.5</av:PointCollection>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Sequence DisplayName="No open entry (Amount is not equal to zero)" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_57">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="436,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Previous entries are not deleted correctly trying to delete it again&quot;]" />
+                        <Sequence DisplayName="Delete Journal entries" sap:VirtualizedContainerService.HintSize="436,718" sap2010:WorkflowViewState.IdRef="Sequence_83">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window - Payment Journal" sap:VirtualizedContainerService.HintSize="414,594" sap2010:WorkflowViewState.IdRef="WindowScope_11" InformativeScreenshot="836f1a8bb631b854e184db428f113c1b" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='* Payment Journal - *' /&gt;">
+                            <ui:WindowScope.Body>
+                              <ActivityAction x:TypeArguments="x:Object">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                </ActivityAction.Argument>
+                                <Sequence DisplayName="Delete Journal Entries" sap:VirtualizedContainerService.HintSize="222,448" sap2010:WorkflowViewState.IdRef="Sequence_82">
+                                  <Sequence.Variables>
+                                    <Variable x:TypeArguments="x:Boolean" Name="NAV_Popup" />
+                                  </Sequence.Variables>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Send Hotkey - UP" EmptyField="False" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="SendHotkey_10" Key="up" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
+                                    <ui:SendHotkey.Target>
+                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="20e8bab489d2589281ee47b662ff0e15" WaitForReady="INTERACTIVE" />
+                                    </ui:SendHotkey.Target>
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                  </ui:SendHotkey>
+                                  <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Send Hotkey - CTRL + A " EmptyField="False" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="SendHotkey_11" Key="a" KeyModifiers="Ctrl" SendWindowMessages="False" SpecialKey="False">
+                                    <ui:SendHotkey.Target>
+                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="20e8bab489d2589281ee47b662ff0e15" WaitForReady="INTERACTIVE" />
+                                    </ui:SendHotkey.Target>
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                  </ui:SendHotkey>
+                                  <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Send Hotkey - CTRL + DEL" EmptyField="False" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="SendHotkey_12" Key="del" KeyModifiers="Ctrl" SendWindowMessages="False" SpecialKey="True">
+                                    <ui:SendHotkey.Target>
+                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="20e8bab489d2589281ee47b662ff0e15" WaitForReady="INTERACTIVE" />
+                                    </ui:SendHotkey.Target>
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                  </ui:SendHotkey>
+                                  <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click on ok" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="Click_65" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                    <ui:Click.CursorPosition>
+                                      <ui:CursorPosition Position="Center">
+                                        <ui:CursorPosition.OffsetX>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:CursorPosition.OffsetX>
+                                        <ui:CursorPosition.OffsetY>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:CursorPosition.OffsetY>
+                                      </ui:CursorPosition>
+                                    </ui:Click.CursorPosition>
+                                    <ui:Click.Target>
+                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="5cb3b8a495396379a132e908c0adb664" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Microsoft Dynamics NAV' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='dialogActionBar' /&gt;&lt;wnd cls='WindowsForms10.BUTTON.*' title='Yes' /&gt;" WaitForReady="INTERACTIVE" />
+                                    </ui:Click.Target>
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                  </ui:Click>
+                                </Sequence>
+                              </ActivityAction>
+                            </ui:WindowScope.Body>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:WindowScope>
+                        </Sequence>
+                      </Sequence>
+                      <FlowStep.Next>
+                        <FlowDecision x:Name="__ReferenceID8" Condition="[RetryCount =4]" DisplayName="RetryCount" sap:VirtualizedContainerService.HintSize="70,87" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <av:Point x:Key="ShapeLocation">405,446.5</av:Point>
+                              <av:Size x:Key="ShapeSize">70,87</av:Size>
+                              <av:PointCollection x:Key="FalseConnector">475,490 580,490 580,290</av:PointCollection>
+                              <av:PointCollection x:Key="TrueConnector">405,490 360,490 360,564.5</av:PointCollection>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <FlowDecision.True>
+                            <FlowStep x:Name="__ReferenceID9">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <av:Point x:Key="ShapeLocation">260,564.5</av:Point>
+                                  <av:Size x:Key="ShapeSize">200,66</av:Size>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <Sequence DisplayName="Error Info" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_84">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_20">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[Out_ErrorMsg]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">Unable to delete the previous entries in NAV while importing Journal file</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_21">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Boolean">[Out_ErrorStatus]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </Sequence>
+                            </FlowStep>
+                          </FlowDecision.True>
+                          <FlowDecision.False>
+                            <FlowStep x:Name="__ReferenceID10">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <av:Point x:Key="ShapeLocation">449,230</av:Point>
+                                  <av:Size x:Key="ShapeSize">262,60</av:Size>
+                                  <av:PointCollection x:Key="ConnectorLocation">580,230 580,160 370,160</av:PointCollection>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_31">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:Int32">[RetryCount]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:Int32">[RetryCount + 1]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                              <FlowStep.Next>
+                                <FlowStep x:Name="__ReferenceID6">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <av:Point x:Key="ShapeLocation">170,134.5</av:Point>
+                                      <av:Size x:Key="ShapeSize">200,51</av:Size>
+                                      <av:PointCollection x:Key="ConnectorLocation">270,185.5 270,197</av:PointCollection>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type Batch no." EmptyField="True" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="TypeInto_15" SendWindowMessages="False" SimulateType="False" Text="[In_Account_no]">
+                                    <ui:TypeInto.Target>
+                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="01ad033994576d6f2f4d491cb0be4a3f" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='content' /&gt;&lt;wnd ctrlname='contentAndMessagesPlaceholder' /&gt;&lt;wnd ctrlname='ContentPlaceholder' /&gt;&lt;wnd aaname='Batch Name' cls='WindowsForms10.Window.*' /&gt;&lt;wnd aaname='Batch Name' cls='WindowsForms10.EDIT.*' /&gt;" WaitForReady="INTERACTIVE" />
+                                    </ui:TypeInto.Target>
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                  </ui:TypeInto>
+                                  <FlowStep.Next>
+                                    <FlowStep x:Name="__ReferenceID1">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <av:Point x:Key="ShapeLocation">170,197</av:Point>
+                                          <av:Size x:Key="ShapeSize">200,66</av:Size>
+                                          <av:PointCollection x:Key="ConnectorLocation">270,263 270,276.5</av:PointCollection>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <Sequence DisplayName="Get Amount from open line of that batch" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Send Hotkey" EmptyField="False" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="SendHotkey_3" Key="enter" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
+                                          <ui:SendHotkey.Target>
+                                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" WaitForReady="INTERACTIVE" />
+                                          </ui:SendHotkey.Target>
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                        </ui:SendHotkey>
+                                        <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Amount in open line" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="GetValue_3">
+                                          <ui:GetValue.Target>
+                                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="941b470640b6a6314f1023cf59f3907b" Selector="&lt;wnd app='microsoft.dynamics.nav.client.exe' cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd cls='WindowsForms10.Window.*' title='Edit - Payment Journal - *' /&gt;&lt;wnd ctrlname='LayoutPlaceholder' /&gt;&lt;wnd ctrlname='content' /&gt;&lt;wnd ctrlname='contentAndMessagesPlaceholder' /&gt;&lt;wnd ctrlname='ContentPlaceholder' /&gt;&lt;wnd cls='WindowsForms10.Window.*' idx='2' /&gt;&lt;wnd ctrlname='_DataGrid' /&gt;&lt;ctrl name='DataGridView' role='table' /&gt;&lt;ctrl name='Row 0' role='row' /&gt;&lt;ctrl name='Amount Row 0' role='cell' /&gt;" WaitForReady="INTERACTIVE" />
+                                          </ui:GetValue.Target>
+                                          <ui:GetValue.Value>
+                                            <OutArgument x:TypeArguments="ui:GenericValue">[OpenLine]</OutArgument>
+                                          </ui:GetValue.Value>
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                        </ui:GetValue>
+                                      </Sequence>
+                                      <FlowStep.Next>
+                                        <x:Reference>__ReferenceID0</x:Reference>
+                                      </FlowStep.Next>
+                                    </FlowStep>
+                                  </FlowStep.Next>
+                                </FlowStep>
+                              </FlowStep.Next>
+                            </FlowStep>
+                          </FlowDecision.False>
+                        </FlowDecision>
+                      </FlowStep.Next>
+                    </FlowStep>
+                  </FlowDecision.False>
+                </FlowDecision>
+                <x:Reference>__ReferenceID1</x:Reference>
+                <x:Reference>__ReferenceID2</x:Reference>
+                <x:Reference>__ReferenceID3</x:Reference>
+                <x:Reference>__ReferenceID4</x:Reference>
+                <x:Reference>__ReferenceID5</x:Reference>
+                <x:Reference>__ReferenceID6</x:Reference>
+                <x:Reference>__ReferenceID7</x:Reference>
+                <x:Reference>__ReferenceID8</x:Reference>
+                <x:Reference>__ReferenceID9</x:Reference>
+                <x:Reference>__ReferenceID10</x:Reference>
+              </Flowchart>
+            </ActivityAction>
+          </ui:WindowScope.Body>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </ui:WindowScope>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="723,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="If error occurs" sap:VirtualizedContainerService.HintSize="284,577" sap2010:WorkflowViewState.IdRef="Sequence_2">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[Out_ErrorMsg]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[" Unable to import payment Journal in Nav."]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_2">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Boolean">[Out_ErrorStatus]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                </Assign.Value>
+              </Assign>
+              <ui:LogMessage sap2010:Annotation.AnnotationText="If error occured, then exact exception will display in output panel." DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="262,108" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Error" Message="[&quot;Exception : &quot;+exception.ToString]">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </ui:LogMessage>
+              <ui:LogMessage sap2010:Annotation.AnnotationText="If error occured, then assigned error message will display in output panel." DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="262,108" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Error" Message="[&quot;Error_Msg : &quot;+Out_ErrorMsg]">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </ui:LogMessage>
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="737,51" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Payment Journal Import Ended&quot;]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:LogMessage>
+  </Sequence>
+</Activity>

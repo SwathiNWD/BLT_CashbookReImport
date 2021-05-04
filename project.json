@@ -1,0 +1,63 @@
+{
+  "name": "Cashbook_ReImport",
+  "description": "Re import of Cashbooks, Statements based on request",
+  "main": "Main.xaml",
+  "dependencies": {
+    "Microsoft.Activities": "[1.0.1]",
+    "UiPath.Excel.Activities": "[2.10.3-beta.1494693]",
+    "UiPath.Mail.Activities": "[1.4.1]",
+    "UiPath.System.Activities": "[19.4.1]",
+    "UiPath.UIAutomation.Activities": "[19.4.2]",
+    "UiPathTeam.HealthCheckUp.Activities": "[1.0.6835.20375]",
+    "UiPathTeam.NextWorkingDay.Activities.Design": "[1.0.1]",
+    "UiPathTeam.UnZipFile.Activities": "[1.4.0]"
+  },
+  "webServices": [],
+  "entitiesStores": [],
+  "schemaVersion": "4.0",
+  "studioVersion": "21.2.0.0",
+  "projectVersion": "1.0.8",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "isPausable": true,
+    "requiresUserInteraction": true,
+    "supportsPersistence": false,
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ],
+    "executionType": "Workflow",
+    "readyForPiP": false,
+    "startsInPiP": false
+  },
+  "designOptions": {
+    "projectProfile": "Developement",
+    "outputType": "Process",
+    "libraryOptions": {
+      "includeOriginalXaml": false,
+      "privateWorkflows": []
+    },
+    "processOptions": {
+      "ignoredFiles": []
+    },
+    "fileInfoCollection": [],
+    "modernBehavior": false
+  },
+  "arguments": {
+    "input": [],
+    "output": []
+  },
+  "expressionLanguage": "VisualBasic",
+  "entryPoints": [
+    {
+      "filePath": "Main.xaml",
+      "uniqueId": "e890f7ad-ffca-4d5f-b52a-48f29decfe0a",
+      "input": [],
+      "output": []
+    }
+  ],
+  "isTemplate": false,
+  "templateProjectData": {},
+  "publishData": {},
+  "targetFramework": "Legacy"
+}
